@@ -1,0 +1,27 @@
+NetController Assembly Language Specification
+Version 1.0
+
+Shreyak Chakraborty (C) 2021
+-----------------------------------------------------------------------
+
+
+All commands are of the form <OPTYPE> <PIN_NUMBER> <PARAMETER1> <PARAMETER2> .....
+
+
+Current OPTYPEs supported:
+1. SETPIN (sets the pin as input (IN) or output (OUT))
+
+
+
+2. SEND (sends a integer signal value to a pin)
+
+
+
+3. DELAY (creates a delay of x milliseconds)
+
+
+
+
+
+
+
