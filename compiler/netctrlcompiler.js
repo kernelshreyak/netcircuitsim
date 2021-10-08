@@ -7,11 +7,16 @@
  	
 
 function parse_command(cmd_string){
-	console.log("CMD REC: " + cmd_string)
 	const cmdparts = cmd_string.split(" ")
 
-	const opcode = cmd_string[0]
-	console.log("OPCODE:"+opcode)
+	if(cmdparts[0] == "") return;
+
+	const command = {
+		"optype" : cmdparts[0],
+		"pinvalue" : cmdparts[1],
+		"param" : cmdparts[2]
+	}
+	console.log(command)
 }
 
 
