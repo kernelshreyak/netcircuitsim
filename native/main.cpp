@@ -20,6 +20,7 @@
 #include "actuators.h"
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -56,13 +57,17 @@ int main(int argc, char const *argv[])
     // Main render cycle
     // Controller window
     sf::RenderWindow window(sf::VideoMode(800,300), "NetCircuit Controller");
-    // window.setFramerateLimit(0);
-    window.setVerticalSyncEnabled(true); 
+    window.setFramerateLimit(0);
+    // window.setVerticalSyncEnabled(true); 
 
     // // actuators window
     // sf::RenderWindow window2(sf::VideoMode(200,200), "NetCircuit Actuators");
     // window2.setFramerateLimit(0);
-    // window2.setVerticalSyncEnabled(true); 
+    // window2.setVerticalSyncEnabled(true);
+    
+    sf::Texture texture; 
+    string filename; 
+    int framenum = 0;
     while (window.isOpen())
     {
         sf::Event event;
@@ -81,22 +86,32 @@ int main(int argc, char const *argv[])
 
         //---------------------------- draw components started--------------------------------------------
         for(int i = 0;i< PINCOUNT;i++){
-            if(controller.pins[i].pinstate == 1){
-                controllerpins[i].setFillColor(sf::Color::Blue);
-            }
-            else if(controller.pins[i].pinstate == 2){
-                controllerpins[i].setFillColor(sf::Color::Green);
-            }
+            // if(controller.pins[i].pinstate == 1){
+            //     controllerpins[i].setFillColor(sf::Color::Blue);
+            // }
+            // else if(controller.pins[i].pinstate == 2){
+            //     controllerpins[i].setFillColor(sf::Color::Green);
+            // }
+
+            if(i%2 == 0) controllerpins[i].setFillColor(sf::Color::Green);
+            else controllerpins[i].setFillColor(sf::Color::Blue);
 
             window.draw(controllerpins[i]);
         }
         //---------------------------- draw components completed--------------------------------------------
 
-
-
-        window.display();
-        sf::sleep(sf::seconds(1));
+        texture.create(window.getSize().x, window.getSize().y);
+        texture.update(window);
+        filename = "frame"+to_string(framenum)+".jpg";
+        if(texture.copyToImage().saveToFile(filename))
+        {
+            cout << "frame saved" << filename <<endl;
+        }
         
+        // window.display();
+        sf::sleep(sf::seconds(0.5));
+        
+        framenum += 1;
     }
     return 0;
 }

@@ -1,2 +1,4 @@
 node_modules
 compiler/__pycache__
+simulator-web/*.js
+simulator-web/*.js.map
