@@ -31,14 +31,14 @@ function exec_ncvm_command(controller,cmd_string){
 		// validate commands
 		switch (command.optype) {
 			case "SETPIN":
+				if(command.param != 1 && command.param != 2 && command.param != 0) return "NCVM_EXEC_ERROR: Invalid parameter for SETPIN"; 
 				console.log(`NCVM: set PIN${command.pinvalue} to ${command.param}`);
 				controller.pins[command.pinvalue].pinstate = command.param;
 				controller.renderpins();
 				break;
 		
 			default:
-				return "NCVM_EXEC_ERROR: ";
-				break;
+				return "NCVM_EXEC_ERROR: Invalid OPTYPE";
 		}
 		return "";
 
@@ -62,27 +62,28 @@ function exec_ncvm_command(controller,cmd_string){
  * @returns Compilation Error/Success message string
  */
 function compile_netcontroller_assembly(controller,data){
+	if(data == "") return "NCVM_COMPILE_ERROR: Invalid Assembly code";
 	let compiler_response = "";
-	console.log(data);
 	try{
 		const commands = data.split("\n");
 		if(commands.length == 0){
 			return "NCVM_COMPILE_ERROR: Invalid Assembly code";
 		}
-		console.log("commands",commands);
+
 		console.log("-----NETCONTROLLER ASSEMBLY COMPILER 1.0----");
 		console.log("Compilation start");
 
 		for(let i=0;i<commands.length;i++){
 			let execresponse = exec_ncvm_command(controller,commands[i]);
 			if(execresponse.includes("NCVM_EXEC_ERROR")){
+				console.log("Compilation terminated with error");
 				return execresponse;
 			}
 			compiler_response += execresponse;
 		}
 				
 		
-		console.log("Compilation finished");
+		console.log("Compilation finished successfully");
 		
 		if(compiler_response == "")
 			return "NCVM Execution success!";
