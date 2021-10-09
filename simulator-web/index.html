@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>NetCircuit Simulator</title>
+
+        <style>
+            .controller{
+                width: 50%;
+            }
+            #controllerpins{
+                display: flex;
+            }
+            #controllerpins > div{
+                border: 1px solid black;
+                margin: 10px;
+                padding: 5px;
+            }
+
+            .controller-body{
+                border: 1px solid black;
+                padding: 20px;
+            }
+        </style>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    </head>
+
+    <body>
+        <div class="controller">
+            <div id="controllerpins"></div>
+            <div class="controller-body">
+                <p>
+                    <textarea rows="10" id="compiler_src" placeholder="Write NetController Assembly"></textarea>
+                </p>
+                <p>
+                    <button class="btn btn-success" id="compile_code">Compile</button>
+                </p>
+            </div>
+        </div>
+    
+        <br />
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="alert alert-warning" id="compiler_response">Not compiled yet</div>
+            </div>
+        </div>
+        
+
+        <script src="app.bundle.js"></script>
+    </body>
+    
+</html>
