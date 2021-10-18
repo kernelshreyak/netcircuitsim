@@ -30,11 +30,22 @@ function exec_ncvm_command(controller,cmd_string){
 	try{
 		// validate commands
 		switch (command.optype) {
+
+
+
 			case "SETPIN":
 				if(command.param != 1 && command.param != 2 && command.param != 0) return "NCVM_EXEC_ERROR: Invalid parameter for SETPIN"; 
 				console.log(`NCVM: set PIN${command.pinvalue} to ${command.param}`);
 				controller.pins[command.pinvalue].pinstate = command.param;
 				controller.renderpins();
+				break;
+
+
+			case "STORE":
+				if(parseInt(command.pinvalue) > 9) return "NCVM_EXEC_ERROR: Invalid memory address!";
+				console.log(`NCVM: store data internal: ${command.param} in to register R${command.pinvalue}`);
+				controller.internal_memory.datavalues[command.pinvalue].registerdata = command.param;
+				controller.renderregisters();
 				break;
 		
 			default:
@@ -79,13 +90,15 @@ function compile_netcontroller_assembly(controller,data){
 				return execresponse;
 			}
 			compiler_response += execresponse;
-		}
-				
+		}			
+		if(compiler_response == "")
+			compiler_response = "Compilation finished successfully";
 		
-		console.log("Compilation finished successfully");
+		return compiler_response;
 		
 	}
 	catch(err){
+		return compiler_response;
 	}
 		
 }

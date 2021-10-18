@@ -1,0 +1,15 @@
+NetCircuit System Architecture
+
+
+NetController:
+1. Contains 10 GPIO pins which can be set to OFF(0),IN(1) and OUT(2)
+2. Contains 10 Internal Memory Registers (implemented via NCVM_RegisterArray)
+
+
+
+NetMemory:
+
+
+NetSensor:
+1. Works as an input device to a NetController.
+2. Has one or more output pins (S1,S2,.....)

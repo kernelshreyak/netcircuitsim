@@ -1,6 +1,9 @@
 NetController Assembly Language Specification
 Version 1.0
 
+All commands below should be implemented by any implementation of the NCVM. These can be implemented for direct execution like SETPIN or indirect execution like SEND.
+
+
 Shreyak Chakraborty (C) 2021
 -----------------------------------------------------------------------
 
@@ -9,19 +12,31 @@ All commands are of the form <OPTYPE> <PIN_NUMBER> <PARAMETER1> <PARAMETER2> ...
 
 
 Current OPTYPEs supported:
-1. SETPIN (sets the pin as input (IN) or output (OUT))
+1. SETPIN (sets the pin as input (IN = 1) or output (OUT = 2))
+SETPIN 0 1
+SETPIN 3 2
+SETPIN 5 0
 
 
-
-2. SEND (sends a integer signal value to a pin)
-
+2. SEND (sends a value to a pin - is encapusulated in form of a NetCircuit Data Packet. Normally, only implemented for Indirect Execution due to security risks)
+SEND 2 [EXTERNAL_COMMAND_HEADER] "hello"
+EXTERNAL_COMMAND_HEADER specifies header data sent with the data packet. This allows custom commands to be sent along with the data depending on the operation and the devices connected.
 
 
 3. DELAY (creates a delay of x milliseconds)
+DELAY 100
 
 
+4. STORE (stores a value to an internal register)
+STORE R1 100
+STORE R5 "hello"
 
 
+5. STOREX (stores a value to an external memory address. It uses SEND commands underneath)
+STOREX 8890 "hello"
+
+{Internally uses: SEND 0 [INDEX_8890] "hello"}
+(INDEX_<number>) specifies the memory index of the external memory device connected on the specified pin. 
 
 
 
